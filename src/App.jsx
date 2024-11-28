@@ -1,37 +1,28 @@
-// import Tray from "./components/Tray";
-
-import React, { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 
-import { Home } from './pages/Home';
-import { Settings } from './pages/Settings';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import Video from "./components/Video";
 
 import './css/index.css';
-  
-// Layout Component
-function Layout() {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
-}
+import Button from "./components/Button";
 
 function App() {
-  
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+  const [pingMsg, setPingMsg] = useState("");
 
-        </Route>
-        <Route path="/settings" element={<Layout />}>
-          <Route index element={<Settings />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+  return (
+    <main className="container">
+      <motion.h1
+        className="text-4xl font-bold text-center m-8 underline"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        WAKE UP
+      </motion.h1>
+      <Video className="w-full h-auto bg-[#141f31] rounded-lg my-8 overflow-hidden
+      hover:scale-105 hover:border-black hover:border-4 transition duration-200
+      active:scale-95" />
+    </main>
   );
 }
 

@@ -5,18 +5,16 @@
   "identifier": "com.wakey.app",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:5678",
+    "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "Waeky-Waeky",
-        "width": 500,
-        "height": 600,
-        "resizable": true,
-        "decorations": false
+        "title": "wakey",
+        "width": 800,
+        "height": 600
       }
     ],
     "security": {
@@ -33,18 +31,5 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  },
-  "plugins": {
-    "tray": {
-      "iconPath": "../public/tauri.svg", 
-      "tooltip": "My Tauri App",
-      "menu": [
-        {
-          "id": "quit",
-          "label": "Quit",
-          "role": "quit"
-        }
-      ]
-    }
   }
 }
