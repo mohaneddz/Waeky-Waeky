@@ -5,31 +5,23 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc && vite build",
+		"build": "vite build",
 		"preview": "vite preview",
 		"tauri": "tauri"
 	},
 	"dependencies": {
-		"@mediapipe/tasks-vision": "^0.10.33",
-		"@tauri-apps/api": "^2.1.1",
-		"@tauri-apps/plugin-fs": "^2.0.2",
-		"@tauri-apps/plugin-shell": "^2.0.1",
-		"clsx": "^2.1.1",
+		"@tauri-apps/api": "^2",
+		"@tauri-apps/plugin-shell": "^2",
 		"motion": "^11.12.0",
 		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-element-to-jsx-string": "^15.0.0",
-		"react-router-dom": "^7.0.1",
-		"tailwind-merge": "^2.5.5"
+		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
 		"@tauri-apps/cli": "^2",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.20",
-		"concurrently": "^7.0.0",
 		"postcss": "^8.4.49",
 		"tailwindcss": "^3.4.15",
-		"typescript": "^5.9.3",
 		"vite": "^5.3.1"
 	}
 }
