@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "wakey",
-        "width": 800,
-        "height": 600
+        "width": 1000,
+        "height": 1000
       }
     ],
     "security": {
@@ -31,5 +31,18 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
+  },
+  "plugins": {
+    "tray": {
+      "iconPath": "../public/tauri.svg", 
+      "tooltip": "My Tauri App",
+      "menu": [
+        {
+          "id": "quit",
+          "label": "Quit",
+          "role": "quit"
+        }
+      ]
+    }
   }
 }
