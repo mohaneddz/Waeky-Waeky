@@ -24,10 +24,10 @@ export const Home = () => {
     const streamRef = useRef(null);
     const canvasRef = useRef(null);
     const videoRef = useRef(null);
-    const tooLong = 5;
+    const TOOLONG = 5;
 
     useEffect(() => {
-        if (asleep >= tooLong) {
+        if (asleep >= TOOLONG) {
             wakeUP();
         }
     }, [asleep]);
@@ -131,8 +131,32 @@ export const Home = () => {
         setError(null);
         setIsLoading(false);
         setScore(0);
-        console.log("STOPPED");
     };
+
+    const drowsyButtonChange = () => {
+        if (audio) {
+            return "bg-gradient-to-bl from-red-500 to-red-700 border-red-900 rounded-lg active:from-red-600 active:to-blue-600 animation animate-pulse";
+        } else {
+            return "bg-gradient-to-bl from-slate-400 to-zinc-700 rounded-lg active:from-slate-400 active:to-zinc-700";
+        }
+    }
+
+    const startButtonChange = () => {
+        if (isLoading || !intervalId) {
+            return "bg-gradient-to-bl from-green-400 to-blue-500 rounded-lg active:from-green-600 active:to-blue-600 animation opacity-0.8";
+        } else {
+            return "bg-gradient-to-bl from-green-700 to-blue-900 rounded-lg active:from-green-600 active:to-blue-600";
+        }
+    }
+
+    const stopButtonChange = () => {
+        if (isLoading || !intervalId) {
+            return "bg-gradient-to-bl from-red-700 to-blue-900 rounded-lg active:from-red-600 active:to-blue-600";
+        } else {
+            return "bg-gradient-to-bl from-red-400 to-blue-500 rounded-lg active:from-red-600 active:to-blue-600 animation opacity-0.8";
+        }
+    }
+
 
     return (
         <main className="container">
@@ -151,7 +175,7 @@ export const Home = () => {
                 <Button
                     text={"Start Session"}
                     id="start"
-                    className="bg-gradient-to-bl from-green-400 to-blue-500 rounded-lg active:from-green-600 active:to-blue-600"
+                    className={startButtonChange()}
                     onClick={() => runPython(canvasRef, videoRef)}
                     disabled={isLoading}
                 />
@@ -159,7 +183,7 @@ export const Home = () => {
                 <Button
                     text={"Go To Sleep"}
                     id="end"
-                    className="bg-gradient-to-bl from-red-400 to-blue-500 rounded-lg active:from-red-600 active:to-blue-600"
+                    className={stopButtonChange()}
                     onClick={() => stopWebcam()}
                     disabled={isLoading}
                 />
@@ -167,7 +191,7 @@ export const Home = () => {
                 <Button
                     text={"I'm Awake!"}
                     id="end"
-                    className="bg-gradient-to-bl from-slate-400 to-zinc-700 rounded-lg active:from-slate-400 active:to-zinc-700"
+                    className={drowsyButtonChange()}
                     onClick={() => iAmAwake()}
                     disabled={isLoading}
                 />

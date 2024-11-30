@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getScoreColor } from "../utils/lib";
+import { getScoreColor } from "../utils/Lib";
 
 const Video = ({
     className,
@@ -30,7 +30,7 @@ const Video = ({
                 <div className="score text-[#789dd9] text-xl inline">
                     Drowsiness Score:&nbsp;&nbsp;
                     <span className={`score text-xl inline ${getScoreColor(Score)}`}>
-                        {Score !== -1 ? Score.toFixed(2) : "No Face Detected Yet.."}
+                        {Score !== -1 ? Score.toFixed(2) : "No Face Detected"}
                     </span>
                     {error && <div className="error">{error}</div>}
                     {isLoading && <div className="loading">Loading...</div>}
