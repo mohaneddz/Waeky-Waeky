@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+
 const Button = ({ className, text, id, onClick, disabled }) => {
     return (
         <motion.button
-            className={className + "m-12 px-4 py-2 hover:scale-105 hover:shadow-lg black active:scale-95 text-white"}
+            className={`${className} px-4 py-2 text-bold hover:scale-105 hover:shadow-lg active:scale-95 text-white text-[12px] sm:text-sm md:text-lg lg:text-xl`}
             onClick={onClick}
             disabled={disabled}
             id={id}
