@@ -8,7 +8,6 @@ cd Waeky-Waeky
 
 :: Set up the backend
 echo Setting up the backend...
-cd flask-backend
 python -m venv venv
 call venv\Scripts\activate
 pip install -r requirements.txt
