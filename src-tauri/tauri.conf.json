@@ -5,16 +5,18 @@
   "identifier": "com.wakey.app",
   "build": {
     "beforeDevCommand": "npm run dev",
-    "devUrl": "http://localhost:1420",
+    "devUrl": "http://localhost:5678",
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "wakey",
-        "width": 1000,
-        "height": 1000
+        "title": "Waeky-Waeky",
+        "width": 500,
+        "height": 800,
+        "resizable": false,
+        "decorations": false
       }
     ],
     "security": {
