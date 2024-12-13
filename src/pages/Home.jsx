@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "../components/Button";
-import Video from "../components/Video";
 import { motion } from "framer-motion";
 
-import sound1 from "../assets/sound1.mp3";
-import sound2 from "../assets/sound2.mp3";
-import sound3 from "../assets/sound3.mp3";
-import sound4 from "../assets/sound4.mp3";
-import sound5 from "../assets/sound5.mp3";
+import Button from "../components/Button";
+import Video from "../components/Video";
+import { LampContainer } from "../components/Lamp";
+
+import sound1 from "../assets/sounds/sound1.mp3";
+import sound2 from "../assets/sounds/sound2.mp3";
+import sound3 from "../assets/sounds/sound3.mp3";
+import sound4 from "../assets/sounds/sound4.mp3";
+import sound5 from "../assets/sounds/sound5.mp3";
 
 const sounds = [sound1, sound2, sound3, sound4, sound5];
 
@@ -24,7 +26,7 @@ export const Home = () => {
     const streamRef = useRef(null);
     const canvasRef = useRef(null);
     const videoRef = useRef(null);
-    const TOOLONG = 5;
+    const TOOLONG = 5; // About 10 seconds, kinda good for me
 
     useEffect(() => {
         if (asleep >= TOOLONG) {
@@ -131,69 +133,55 @@ export const Home = () => {
         setError(null);
         setIsLoading(false);
         setScore(0);
+        iAmAwake();
     };
 
-    const drowsyButtonChange = () => {
-        if (audio) {
-            return "bg-gradient-to-bl from-red-500 to-red-700 border-red-900 rounded-lg active:from-red-600 active:to-blue-600 animation animate-pulse";
-        } else {
-            return "bg-gradient-to-bl from-slate-400 to-zinc-700 rounded-lg active:from-slate-400 active:to-zinc-700";
-        }
-    }
-
-    const startButtonChange = () => {
-        if (isLoading || !intervalId) {
-            return "bg-gradient-to-bl from-green-400 to-blue-500 rounded-lg active:from-green-600 active:to-blue-600 animation opacity-0.8";
-        } else {
-            return "bg-gradient-to-bl from-green-700 to-blue-900 rounded-lg active:from-green-600 active:to-blue-600";
-        }
-    }
-
-    const stopButtonChange = () => {
-        if (isLoading || !intervalId) {
-            return "bg-gradient-to-bl from-red-700 to-blue-900 rounded-lg active:from-red-600 active:to-blue-600";
-        } else {
-            return "bg-gradient-to-bl from-red-400 to-blue-500 rounded-lg active:from-red-600 active:to-blue-600 animation opacity-0.8";
-        }
-    }
-
-
     return (
-        <main className="container">
+        <main className="container w-screen flex flex-col justify-center align-center items-center">
+
 
             <motion.h1
-                className="text-4xl font-bold text-center m-8 underline text-slate-400"
+                className="z-[100] text-4xl font-bold text-center m-8 underline text-cyan-200 text-shadow-lg
+                absolute top-[5rem]"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
             >
-                WAKE UP
+                Stay Awake, Keep Grinding!
             </motion.h1>
 
-            <div id="Buttons__Container" className="flex justify-center mb-8 gap-4">
+            < LampContainer />
+
+            <div id="Buttons__Container" className="flex justify-center mb-8 gap-4 absolute top-[16rem]" >
 
                 <Button
                     text={"Start Session"}
                     id="start"
-                    className={startButtonChange()}
                     onClick={() => runPython(canvasRef, videoRef)}
-                    disabled={isLoading}
+                    disabled={intervalId}
+                    audio={audio}
+                    intervalId={intervalId}
+                    isLoading={isLoading}
                 />
 
                 <Button
                     text={"Go To Sleep"}
                     id="end"
-                    className={stopButtonChange()}
                     onClick={() => stopWebcam()}
-                    disabled={isLoading}
+                    disabled={!intervalId}
+                    audio={audio}
+                    intervalId={intervalId}
+                    isLoading={isLoading}
                 />
 
                 <Button
                     text={"I'm Awake!"}
-                    id="end"
-                    className={drowsyButtonChange()}
+                    id="awake"
                     onClick={() => iAmAwake()}
-                    disabled={isLoading}
+                    disabled={isLoading || !audio}
+                    audio={audio}
+                    intervalId={intervalId}
+                    isLoading={isLoading}
                 />
             </div>
 
@@ -213,4 +201,4 @@ export const Home = () => {
     );
 };
 
-export default Home
+export default Home;

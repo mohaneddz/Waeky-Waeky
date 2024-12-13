@@ -2,18 +2,127 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background: linear-gradient(135deg, #141e30, #243b55);
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+@font-face {
+	font-family: 'Arsenal';
+	src: url('../fonts/Arsenal-Regular.ttf');
+	font-weight: 400;
 }
-::selection{
-    background: #48d38f;
-    color: black;
+
+@font-face {
+	font-family: 'Arsenal';
+	src: url('../fonts/Arsenal-Bold.ttf');
+	font-weight: 800;
+}
+.titlebar {
+	height: 30px;
+	background: #329ea3;
+	user-select: none;
+	display: flex;
+	justify-content: flex-end;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 999;
+  }
+  .titlebar-button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	height: 30px;
+	user-select: none;
+	-webkit-user-select: none;
+  }
+  .titlebar-button:hover {
+	background: #5bbec3;
+  }
+body {
+	/* background: linear-gradient(135deg, #f5c360, #51120a); */
+	background-color: #020617;
+	background-size: 400% 400%;
+	animation: gradientAnimation 60s ease infinite;
+	font-family: 'Arsenal', sans-serif;
+	color: #b1b1b1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
+}
+
+#root {
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+}
+
+html {
+	font-size: 68.75%;
+
+	@media (max-height: 1200px) {
+		font-size: 65%;
+	}
+
+	@media (max-height: 1024px) {
+		font-size: 62.5%;
+	}
+
+	@media (max-height: 900px) {
+		font-size: 60%;
+	}
+
+	@media (max-height: 768px) {
+		font-size: 57.5%;
+	}
+
+	@media (max-height: 640px) {
+		font-size: 55%;
+	}
+
+	@media (max-height: 480px) {
+		font-size: 50%;
+	}
+
+	@media (max-height: 360px) {
+		font-size: 45%;
+	}
+}
+
+@keyframes gradientAnimation {
+	0% {
+		background-position: 0% 50%;
+	}
+
+	50% {
+		background-position: 100% 50%;
+	}
+
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+::selection {
+	background: cyan;
+	color: white;
+}
+
+.text-shadow {
+	text-shadow: 1px 1px 2px rgba(65, 64, 64, 0.5);
+}
+
+.text-shadow-lg {
+	text-shadow: 2px 2px 4px rgba(65, 64, 64, 0.5);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.bg-radial-vignette {
+	background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.728));
 }
