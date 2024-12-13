@@ -7,12 +7,12 @@ from scipy.spatial import distance
 import face_recognition
 import logging
 
+
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # Enable CORS for specific origin
-CORS(app, resources={r"/*": {"origins": "http://localhost:1420"}})  # Enable CORS for specific origin
+CORS(app, resources={r"/*": {"origins": "http://localhost:5678"}})
 
 # Define constants for drowsiness detection thresholds
 EYE_AR_THRESH = 0.25  # Eye aspect ratio threshold for detecting drowsiness
