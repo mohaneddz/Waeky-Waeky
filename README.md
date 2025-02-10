@@ -1,4 +1,7 @@
-Here’s an improved version of your documentation with better phrasing and organization. I’ve also added icons for the technologies where applicable:
+## **⚠️ Disclaimer**
+
+**Please note that this project is currently under active development. While can function if all the steps are followed correctly, it may contain bugs and is subject to change. Use with caution.**
+**The final version will be a simple app that is strightforward to use, thus I recommend you wait until it's all done!**
 
 ---
 
@@ -156,3 +159,4 @@ npm test
 This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
+
