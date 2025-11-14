@@ -14,8 +14,8 @@
       {
         "title": "Waeky-Waeky",
         "width": 500,
-        "height": 800,
-        "resizable": false,
+        "height": 600,
+        "resizable": true,
         "decorations": false
       }
     ],

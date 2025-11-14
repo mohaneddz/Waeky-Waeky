@@ -1,117 +1,124 @@
-## **⚠️ Disclaimer**
+<h1 style="font-family: Arial, sans-serif; font-size: 36px;display: flex; align-items: center; border-bottom: 3px solid ; padding-bottom: 5px;">
+  <img src="screenshots/icon.png" alt="WAKEY-WAKEY icon" style="height: 55px; margin-right: 15px; object-fit: cover;" />
+  WAKEY-WAKEY - Desktop Alertness Companion
+</h1>
 
-**Please note that this project is currently under active development. While can function if all the steps are followed correctly, it may contain bugs and is subject to change. Use with caution.**
-**The final version will be a simple app that is strightforward to use, thus I recommend you wait until it's all done!**
+<div align="center">
+  <img src="screenshots/main.png" alt="WAKEY-WAKEY Hero" width="70%"/>
+</div>
 
 ---
 
-# 🚨 **WAKEY-WAKEY** 🚨
+## ⚠️ Disclaimer
+**WAKEY-WAKEY is under active development.**  
+While functional if all steps are followed, it may contain bugs and is subject to change.  
+The final version will be simple, intuitive, and fully stable—recommended to wait for the full release for production use.
 
-## **Stay Alert, Stay Safe!** 👀
+---
 
-WAKEY-WAKEY is your **friendly desktop companion** designed to keep you **awake and alert**. By leveraging cutting-edge **computer vision technologies**, it monitors your alertness in real-time. Whether you’re burning the midnight oil, cramming for exams, or powering through long tasks, WAKEY-WAKEY helps you stay sharp and safe!
+## 📌 Overview
+WAKEY-WAKEY is your **friendly desktop companion** designed to keep you **awake and alert**.  
+It leverages **real-time computer vision** to monitor alertness using your webcam, triggering **customizable audio alerts** when drowsiness is detected.  
 
-## **What Does It Do?** 🤔
+Perfect for students, professionals, night shift workers, or anyone needing focus during long sessions.
 
-- **Real-Time Drowsiness Detection**: Using your webcam and advanced facial recognition, WAKEY-WAKEY continuously monitors your eye movements and facial expressions *(don’t yawn too much!)*.
-- **Smart Alert System**: When signs of drowsiness (like prolonged eye closure or frequent yawning) are detected, the app triggers customizable **audio alerts** to keep you on track.
-- **Non-Intrusive Monitoring**: It works quietly in the background, allowing you to focus on your tasks without interruption.
-- **Privacy-Focused**: All processing occurs locally on your machine, ensuring **no data is sent to external servers**.
-- **Scientific Approach**: It uses proven computer vision techniques, such as:
-  - **Eye Aspect Ratio (EAR)** tracking
-  - **Mouth Aspect Ratio (MAR)** analysis
-  - **Facial landmark detection** and advanced weight calculations
+---
 
-## **Perfect For** 🎯
+## 🚀 Features
+- **Real-Time Drowsiness Detection**: Tracks eye closure, yawns, and facial expressions  
+- **Smart Alert System**: Audio notifications triggered when drowsiness is detected  
+- **Non-Intrusive**: Runs quietly in the background  
+- **Local Processing & Privacy**: No data is sent externally  
+- **Scientific Detection**: Uses EAR, MAR, and facial landmark analysis  
 
-- Students pulling all-nighters
-- Professionals working long hours
-- Anyone needing to stay alert during important tasks
-- Night shift workers
-- Remote workers maintaining focus during long sessions
+---
 
-WAKEY-WAKEY combines the power of a **Flask backend** with a sleek **React frontend**, all wrapped in a native desktop application using **Tauri**. This ensures high performance, low resource usage, and a smooth user experience!
+## 🛠️ Tech Stack
 
-## **📋 Features**
+### **Backend**
+![Rust](https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white) **Rust** – Low-level engine for Tauri  
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) **Flask** – Python web backend  
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) **Python 3.x** – AI & CV logic  
 
-- **Flask** backend API
-- **React** frontend with **Vite**
-- **Tailwind CSS** styling
-- **Python** virtual environment
-- **PostCSS** processing
-- **Rust** as the engine for the program
-- Native app support with **Tauri**
+### **Frontend**
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) **React** – UI library  
+![Vite](https://img.shields.io/badge/Vite-4FC08D?style=for-the-badge&logo=vite&logoColor=white) **Vite** – Frontend build tool  
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) **Tailwind CSS** – Utility-first styling  
+![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=for-the-badge&logo=postcss&logoColor=white) **PostCSS** – CSS processing  
+![Motion](https://img.shields.io/badge/Motion-FF0080?style=for-the-badge&logo=motion&logoColor=white) **Motion** – Smooth UI animations  
 
-## **🛠 Tech Stack**
+### **Platform**
+![Tauri](https://img.shields.io/badge/Tauri-000000?style=for-the-badge&logo=tauri&logoColor=white) **Tauri** – Native desktop app packaging  
 
-### **Backend**  
-- ![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white) **[Rust](https://www.rust-lang.org/learn)** – Safe & fast low-level language  
-- ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) **[Flask](https://flask.palletsprojects.com/)** – Python web framework  
-- ![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white) **[Python 3.x](https://www.python.org/)** – The "AI language"  
+---
 
-### **Frontend**  
-- ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black) **[React](https://reactjs.org/)** – UI library  
-- ![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white) **[Tailwind CSS](https://tailwindcss.com/)** – Utility-first CSS framework  
-- ![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=flat&logo=postcss&logoColor=white) **[PostCSS](https://postcss.org/)** – CSS transformation tool  
-- ![Vite](https://img.shields.io/badge/Vite-4FC08D?style=flat&logo=vite&logoColor=white) **[Vite](https://vitejs.dev/)** – Build tool and dev server  
-- ![Motion](https://img.shields.io/badge/Motion-FF0080?style=flat&logo=motion&logoColor=white) **[Motion](https://motion.dev)** – UI library for smooth animations  
-
-## **📁 Project Structure**
-
+## 📁 Project Structure
 ```
-├── flask-backend/     # Flask server code
+
+├── flask-backend/     # Flask backend API
 │   ├── venv/          # Python virtual environment
 │   └── requirements.txt
-├── src/               # Frontend source code
+├── src/               # React frontend source
 ├── public/            # Static assets
-├── src-tauri/         # Tauri native app config
-├── vite.config.js     # Vite configuration
-├── tailwind.config.js # Tailwind configuration
-└── postcss.config.js  # PostCSS configuration
+├── src-tauri/         # Tauri native app configuration
+├── vite.config.js     # Vite config
+├── tailwind.config.js # Tailwind config
+└── postcss.config.js  # PostCSS config
+
 ```
 
-## **⚙️ Installation**
+---
 
-1. Clone the repository:
+## ⚙️ Installation
+
+### 1️⃣ Clone Repo
 ```sh
 git clone <repository-url>
-cd <project-name>
+cd wakey-waeky
 ```
 
-2. Set up the backend:
+### 2️⃣ Backend Setup
+
 ```sh
 cd flask-backend
 python -m venv venv
+# Windows
 venv\Scripts\activate
-# UNIX: source venv/bin/activate  
+# Unix / MacOS
+source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Install frontend dependencies:
+### 3️⃣ Frontend Setup
+
 ```sh
 npm install
 ```
 
-## **🚀 Development**
+---
 
-1. Start the Flask backend:
+## 🚀 Development
+
+### Start Backend
+
 ```sh
 cd flask-backend
 flask run
 ```
 
-2. Start the frontend development server:
+### Start Frontend
+
 ```sh
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`.
+Access the app at `http://localhost:5173`.
 
-## **🔧 Configuration**
+---
 
-### **Environment Variables**
+## 🔧 Environment Configuration
 
-use the `.env` file in the root directory:
+Create a `.env` file in the root:
 
 ```env
 VITE_API_URL=http://localhost:5000
@@ -119,44 +126,53 @@ FLASK_APP=app.py
 FLASK_ENV=development
 ```
 
-## **📦 Building for Production**
+---
 
-1. Build the frontend:
+## 📦 Production Build
+
+### Build Frontend
+
 ```sh
 npm run build
 ```
 
-2. Build Tauri application (optional):
+### Build Native App with Tauri
+
 ```sh
 npm run tauri build
 ```
 
-## **🧪 Testing**
+---
 
-Run backend tests:
+## 🧪 Testing
+
+### Backend
+
 ```sh
 cd flask-backend
 python -m pytest
 ```
 
-Run frontend tests:
+### Frontend
+
 ```sh
 npm test
 ```
 
-## **🤝 Contributing**
+---
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m "Add feature"`)
+4. Push (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## **License** ⚖️
+---
+
+## 📄 License
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.
-
+Licensed under **MIT License** – see the [LICENSE](LICENSE) file.
