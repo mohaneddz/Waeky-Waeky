@@ -1,7 +1,7 @@
 // import Tray from "./components/Tray";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 import { Home } from './pages/Home';
 import { Settings } from './pages/Settings';
