@@ -1,8 +1,0 @@
-opencv-python
-numpy
-Pillow
-matplotlib
-face_recognition
-scipy
-Flask
-flask_cors
