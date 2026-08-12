@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { Link } from "react-router-dom";
 
 import Button from "../components/Button";
 import Video from "../components/Video";
 import { LampContainer } from "../components/Lamp";
+
+import { initializeDetector, detectDrowsiness } from "../lib/detector";
 
 import sound1 from "../assets/sounds/sound1.mp3";
 import sound2 from "../assets/sounds/sound2.mp3";
@@ -23,13 +26,25 @@ export const Home = () => {
     const [asleep, setAsleep] = useState(false);
     const [audio, setAudio] = useState(null);
 
+    const [isDetecting, setIsDetecting] = useState(false);
+
     const streamRef = useRef(null);
     const canvasRef = useRef(null);
     const videoRef = useRef(null);
-    const TOOLONG = 5; // About 10 seconds, kinda good for me
+    const rafRef = useRef(null);
+    const lastCheckRef = useRef(0);
+    const asleepStartRef = useRef(null); // Track when they started sleeping
+
+    const AWAKE_THRESHOLD = 0.5; // Detection stringency
+    const TOOLONG = 3000; // 3 seconds of continuous drowsiness to trigger alarm
+
+    // Initialize detector on startup for instantaneous starting
+    useEffect(() => {
+        initializeDetector().catch(console.error);
+    }, []);
 
     useEffect(() => {
-        if (asleep >= TOOLONG) {
+        if (asleep) {
             wakeUP();
         }
     }, [asleep]);
@@ -54,16 +69,22 @@ export const Home = () => {
         }
     };
 
-    const runPython = async (canvasRef, videoRef) => {
+    const runDetector = async () => {
         setIsLoading(true);
         setError(null);
+        setIsDetecting(true);
 
         try {
+            await initializeDetector();
+            
+            const selectedCamera = localStorage.getItem("selectedCamera");
+            const videoConstraints = { width: { ideal: 1280 }, height: { ideal: 720 } };
+            if (selectedCamera) {
+                videoConstraints.deviceId = { exact: selectedCamera };
+            }
+
             const constraints = {
-                video: {
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 },
-                },
+                video: videoConstraints,
                 audio: false,
             };
 
@@ -71,50 +92,54 @@ export const Home = () => {
             if (videoRef.current) {
                 videoRef.current.srcObject = stream;
             }
+            streamRef.current = stream;
 
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext("2d");
+            const detect = (now) => {
+                if (!videoRef.current || videoRef.current.readyState !== 4) {
+                    rafRef.current = requestAnimationFrame(detect);
+                    return;
+                }
 
-            const captureFrame = () => {
-                if (!videoRef.current) return;
+                // Throttle detection to save power (e.g. max 10 fps)
+                if (now - lastCheckRef.current > 100) {
+                    lastCheckRef.current = now;
+                    
+                    try {
+                        const data = detectDrowsiness(videoRef.current, performance.now());
+                        
+                        if (data) {
+                            setScore(data.drowsinessScore);
+                            setIsDrowsy(data.isDrowsy);
+                            setError(null);
 
-                ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-
-                const imageData = canvas.toDataURL("image/jpeg");
-
-                fetch("http://localhost:5000/drowsiness_score", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ image: imageData.split(",")[1] }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        setScore(data.drowsinessScore);
-                        setIsDrowsy(data.isDrowsy);
-                        // setEAR(data.EAR);
-                        // setMAR(data.MAR);
-                        setError(null);
-
-                        data.drowsinessScore > 0.7 || data.drowsinessScore === -1
-                            ? setAsleep((sleep) => sleep + 1)
-                            : setAsleep(0);
-                    })
-                    .catch((error) => {
+                            if (data.drowsinessScore > AWAKE_THRESHOLD || data.drowsinessScore === -1) {
+                                if (asleepStartRef.current === null) asleepStartRef.current = now;
+                                
+                                if (now - asleepStartRef.current > TOOLONG) {
+                                    setAsleep(true);
+                                }
+                            } else {
+                                asleepStartRef.current = null;
+                            }
+                        }
+                    } catch (error) {
                         setError(error.message);
-                    })
-                    .finally(() => {
-                        setIsLoading(false);
-                    });
+                    }
+                }
+
+                rafRef.current = requestAnimationFrame(detect);
             };
 
-            const id = setInterval(captureFrame, 2000);
-            setIntervalId(id);
-
-            return () => clearInterval(intervalId);
+            // Wait until video starts playing before running detect
+            videoRef.current.onloadeddata = () => {
+                setIsLoading(false);
+                rafRef.current = requestAnimationFrame(detect);
+            };
+            
         } catch (error) {
             setError(error.message);
+            setIsDetecting(false);
+            setIsLoading(false);
         }
     };
 
@@ -126,19 +151,32 @@ export const Home = () => {
         if (videoRef.current) {
             videoRef.current.srcObject = null;
         }
-        if (intervalId) {
-            clearInterval(intervalId);
-            setIntervalId(null);
+        if (rafRef.current) {
+            cancelAnimationFrame(rafRef.current);
+            rafRef.current = null;
         }
+        setIsDetecting(false);
         setError(null);
         setIsLoading(false);
         setScore(0);
+        asleepStartRef.current = null;
         iAmAwake();
     };
+
+    // Auto-start detection on mount
+    useEffect(() => {
+        runDetector();
+        return () => stopWebcam();
+    }, []);
 
     return (
         <main className="container w-screen flex flex-col justify-center align-center items-center">
 
+            <div className="absolute top-4 right-8 z-[200]">
+                <Link to="/settings" className="text-gray-300 hover:text-white underline font-bold bg-[#141e30] px-4 py-2 rounded-lg border-2 border-gray-600 hover:border-cyan-500 transition">
+                    ⚙️ Settings
+                </Link>
+            </div>
 
             <motion.h1
                 className="z-[100] text-4xl font-bold text-center m-8 underline text-cyan-200 text-shadow-lg
@@ -157,10 +195,10 @@ export const Home = () => {
                 <Button
                     text={"Start Session"}
                     id="start"
-                    onClick={() => runPython(canvasRef, videoRef)}
-                    disabled={intervalId}
+                    onClick={() => runDetector()}
+                    disabled={isDetecting}
                     audio={audio}
-                    intervalId={intervalId}
+                    intervalId={isDetecting ? 1 : null}
                     isLoading={isLoading}
                 />
 
@@ -168,9 +206,9 @@ export const Home = () => {
                     text={"Go To Sleep"}
                     id="end"
                     onClick={() => stopWebcam()}
-                    disabled={!intervalId}
+                    disabled={!isDetecting}
                     audio={audio}
-                    intervalId={intervalId}
+                    intervalId={isDetecting ? 1 : null}
                     isLoading={isLoading}
                 />
 
@@ -180,7 +218,7 @@ export const Home = () => {
                     onClick={() => iAmAwake()}
                     disabled={isLoading || !audio}
                     audio={audio}
-                    intervalId={intervalId}
+                    intervalId={isDetecting ? 1 : null}
                     isLoading={isLoading}
                 />
             </div>
