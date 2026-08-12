@@ -9,9 +9,11 @@ lerna-debug.log*
 
 # Big beefy folder
 node_modules
+dist
 dist-ssr
 *.local
 ./src-tauri/target/*
+src-tauri/target
 
 # Editor directories and files
 .vscode/*
