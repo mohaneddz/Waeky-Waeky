@@ -12,6 +12,9 @@ const MOUTH_HEIGHT_3 = [312, 317];
 const EYE_AR_THRESH = 0.25;
 const MOUTH_AR_THRESH = 0;
 
+// The WASM runtime must match the JS package exactly; package.json pins the same version.
+const MEDIAPIPE_VERSION = "0.10.33";
+
 let faceLandmarker: FaceLandmarker | null = null;
 
 // Initialize the FaceLandmarker model
@@ -19,7 +22,7 @@ export const initializeDetector = async () => {
     if (faceLandmarker) return faceLandmarker;
 
     const vision = await FilesetResolver.forVisionTasks(
-        "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm"
+        `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MEDIAPIPE_VERSION}/wasm`
     );
 
     faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
