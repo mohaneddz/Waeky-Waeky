@@ -37,7 +37,7 @@
   "plugins": {
     "tray": {
       "iconPath": "../public/tauri.svg", 
-      "tooltip": "My Tauri App",
+      "tooltip": "Waeky-Waeky",
       "menu": [
         {
           "id": "quit",
