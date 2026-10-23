@@ -11,12 +11,6 @@
 
 ---
 
-## ⚠️ Disclaimer
-**WAKEY-WAKEY is under active development.**
-It's mid-migration from a Python backend to an in-app TypeScript detection pipeline — expect rough edges, and treat anything below as a snapshot rather than a stable release.
-
----
-
 ## 📌 Overview
 WAKEY-WAKEY is a **desktop companion** designed to keep you **awake and alert**.
 It uses your webcam and real-time facial-landmark analysis to detect drowsiness (eye closure, yawning), triggering **customizable audio alerts** when it does.
@@ -29,19 +23,21 @@ Perfect for students, professionals, night-shift workers, or anyone needing focu
 - **Real-Time Drowsiness Detection**: Tracks eye closure and yawns via facial landmarks (Eye Aspect Ratio / Mouth Aspect Ratio)
 - **Smart Alert System**: Rotating audio notifications (`sound1`–`sound5.mp3`) triggered when drowsiness is detected
 - **Non-Intrusive**: Runs quietly in the background with a system tray presence
-- **Local Processing & Privacy**: Detection now runs entirely in-app — no external backend, no data leaves your device
+- **Local Processing & Privacy**: Detection runs entirely in-app. Webcam frames never leave your device; the only network traffic is downloading the MediaPipe runtime and face model on first start
 - **Scientific Detection**: EAR/MAR thresholds over MediaPipe FaceLandmarker output
 
 ---
 
-## 🏗️ Architecture — mid-migration
+## 🏗️ How detection works
 
-The app originally shipped with a local **Flask/Python** backend for the computer-vision inference. That backend (`app.py`, `requirements.txt`, `autoInstall.bat`, `installRequirements.bat`) has been **removed** in favor of running detection directly in the frontend via `@mediapipe/tasks-vision` (`src/lib/detector.ts`), using MediaPipe's `FaceLandmarker` (GPU-delegated, WASM runtime) to compute eye/mouth aspect ratios frame-by-frame — no Python, no separate server process.
+Detection runs in the app itself through `@mediapipe/tasks-vision` (`src/lib/detector.ts`). Each webcam frame goes through MediaPipe's `FaceLandmarker` (GPU-delegated, WASM runtime), and the detector turns the landmarks into two numbers:
 
-This migration is still being wrapped up:
-- `detector.ts` is written and wired, but hasn't been fully committed/verified end-to-end
-- `Home.jsx` / `Settings.jsx` have in-flight edits adapting the UI to the new in-app pipeline
-- The old `.env` variables (`VITE_API_URL`, `FLASK_APP`) are obsolete now that there's no Flask backend to point at
+- **EAR** (eye aspect ratio), averaged over both eyes. It drops as the eyes close.
+- **MAR** (mouth aspect ratio), from the inner lips. It rises during a yawn.
+
+Both are normalised and combined into a drowsiness score, with eye closure weighted five times more than the mouth. A score above 0.7 counts as drowsy, which triggers the alert sound.
+
+The WASM runtime is pinned to the same version as the npm package, since the two must match. Earlier versions used a separate Flask/Python service for inference; it was removed in August 2026, so there is no Python setup.
 
 ---
 
